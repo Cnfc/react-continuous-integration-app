@@ -27,7 +27,7 @@ aliases:
       key: app-{{ checksum "package.json" }}
   - &install-aws-cli
       run: 
-       name: Installing AWS CLI
+        name: Installing AWS CLI
         working_directory: /
         command: |
           sudo apt-get -y -qq update
@@ -42,7 +42,7 @@ aliases:
         cd build
         zip ../build.zip -r * .[^.]*
         echo "Build successful"
-        
+
 jobs:
   build:
     executor: app-executor
