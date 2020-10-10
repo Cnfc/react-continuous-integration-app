@@ -23,6 +23,7 @@
   "plugins": ["react"],
   "rules": {
     "semi": [2, "always"],
+    "quotes": [2, "double", "avoid-escape"],
     "space-before-function-paren": [
       0,
       {
