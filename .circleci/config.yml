@@ -41,14 +41,7 @@ aliases:
         cd build
         zip ../build.zip -r * .[^.]*
         echo "Build successful"
-  - &run-linting
-    run:
-      name: Run linting
-      command: npm run lint
-  - &run-prettier
-    run:
-      name: Run prettier
-      command: npm run prettier:check
+  
 
 jobs:
   build:
@@ -60,13 +53,15 @@ jobs:
       - *install-dependencies
       - *save-cache
 
-  linting:
+   linting:
     executor: app-executor
     steps:
       - checkout
       - *show-current-branch-name
       - *restore-cache
-      - *run-linting
+      - run:
+          name: Run linting
+          command: npm run lint
 
   prettier:
     executor: app-executor
@@ -74,7 +69,9 @@ jobs:
       - checkout
       - *show-current-branch-name
       - *restore-cache
-      - *run-prettier
+      - run:
+          name: Run prettier check
+          command: npm run prettier:check
 
   deploy-to-aws-s3:
     executor: app-executor
@@ -131,7 +128,8 @@ workflows:
                 - staging
                 - master
       - prettier:
-          requires: -build
+          requires:
+            - build
           filters:
             branches:
               only:
@@ -156,3 +154,4 @@ workflows:
                 - develop
                 - staging
                 - master
+     
